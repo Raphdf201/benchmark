@@ -1,0 +1,103 @@
+import time
+
+def main():
+    print("Starting benchmarks...\n")
+
+    time_benchmark("1. Fibonacci(42)", lambda: fibonacci(42))
+    time_benchmark("2. Prime Sieve (10M)", lambda: prime_sieve(10_000_000))
+    time_benchmark("3. Mandelbrot (2000x2000)", lambda: mandelbrot(2000))
+    time_benchmark("4. Matrix Multiply (500x500)", lambda: matrix_multiply(500))
+    time_benchmark("5. Binary Trees (depth 18)", lambda: binary_trees(18))
+
+    print("\nDone!")
+
+def time_benchmark(name: str, action):
+    start_time: float = time.time()
+    result: object = action()
+    elapsed_time: float = (time.time() - start_time) * 1000
+    print(f"{name}: {elapsed_time}ms (result: {result})")
+
+def fibonacci(n: int) -> int:
+    if n <= 1: return n
+    return fibonacci(n - 1) + fibonacci(n - 1)
+
+def prime_sieve(n: int) -> int:
+    is_prime: list[bool] = [True] * (n + 1)
+
+    for i in range(2, n): is_prime[i] = True
+
+    for i in range(2, n):
+        if i * i > n: break
+        if not is_prime[i]: continue
+        for j in range(i * i, n):
+            is_prime[j] = False
+
+    count: int = 0
+    for i in range(2, n):
+        if is_prime[i]: count += 1
+    return count
+
+def mandelbrot(n: int) -> int:
+    count: int = 0
+    xmin: int = -2
+    xmax: int = 1
+    ymin: float = -1.5
+    ymax: float = 1.5
+    max_iter: int = 1000
+
+    for py in range(0, n):
+        for px in range (0, n):
+            x0: float = xmin + (xmax - xmin) * px / n
+            y0: float = ymin + (ymax - ymin) * py / n
+
+            x: float = 0
+            y: float = 0
+            i: int = 0
+
+            while x * x + y * y <= 4 and i < max_iter:
+                xtemp: float = x * x - y * y + x0
+                y = 2 * x * y + y0
+                x = xtemp
+                i += 1
+
+            count += i
+
+    return count
+
+def matrix_multiply(n: int) -> float:
+    a: list[list[float]] = [[] * n] * n
+    b: list[list[float]] = [[] * n] * n
+    c: list[list[float]] = [[] * n] * n
+
+    for i in range(0, n):
+        for j in range(0, n):
+            a[i][j] = i = j
+            b[i][j] = i - j
+
+    for i in range(0, n):
+        for j in range(0, n):
+            tot: int = 0
+            for k in range(0, n): tot += a[i][k] * b[k][j]
+            c[i][j] = tot
+
+    return c[int(n / 2)][int(n / 2)]
+
+def binary_trees(n: int) -> int:
+    return create_tree(n).check()
+
+def create_tree(n: int) -> TreeNode:
+    if n == 0: return TreeNode(None, None)
+    else: return TreeNode(create_tree(n - 1), create_tree(n - 1))
+
+class TreeNode:
+    def __init__(self, left: TreeNode | None, right: TreeNode | None):
+        self.left: TreeNode | None = left
+        self.right: TreeNode | None = right
+
+    def check(self) -> int:
+        if self.left is None or self.right is None:
+            return 1
+        return 1 + self.left.check() + self.right.check()
+
+if __name__ == '__main__':
+    main()
