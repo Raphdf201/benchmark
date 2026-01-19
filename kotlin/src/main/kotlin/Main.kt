@@ -1,3 +1,5 @@
+package net.raphdf201.benchmark
+
 import kotlin.system.measureTimeMillis
 
 fun main() {
@@ -73,9 +75,9 @@ fun mandelbrot(n: Int): Int {
 }
 
 fun matrixMultiply(n: Int): Double {
-    val a = Array(n) { DoubleArray(n) }
-    val b = Array(n) { DoubleArray(n) }
-    val c = Array(n) { DoubleArray(n) }
+    val a = Array(n + 1) { DoubleArray(n + 1) }
+    val b = Array(n + 1) { DoubleArray(n + 1) }
+    val c = Array(n + 1) { DoubleArray(n + 1) }
 
     for (i in 0..n) for (j in 0..n) {
         a[i][j] = (i + j).toDouble()
