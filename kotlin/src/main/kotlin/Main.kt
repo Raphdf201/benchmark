@@ -1,6 +1,7 @@
 package net.raphdf201.benchmark
 
 import kotlin.system.measureTimeMillis
+import kotlin.time.measureTime
 
 fun main() {
     println("Starting benchmarks...\n")
@@ -15,17 +16,34 @@ fun main() {
 }
 
 fun timeBenchmark(name: String, action: () -> Any) {
-    var result: Any
-    val time = measureTimeMillis {
+    var result: Any = 0
+    val time = measureTime {
         result = action()
     }
 
-    println("$name: ${time}ms (result: $result)")
+    println("$name: ${time.inWholeMilliseconds}ms (result: $result)")
 }
 
 fun fibonacci(n: Long): Long {
     if (n <= 1) return n
     return fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+fun primeSieve(n: Int): Int {
+    val isPrime = BooleanArray(n + 1)
+    for (i in 2..n) isPrime[i] = true
+
+    for (i in 2..n) {
+        if (i * i > n) break
+        if (!isPrime[i]) continue
+        for (j in (i * i)..n step i) {
+            isPrime[j] = false
+        }
+    }
+
+    var count = 0
+    for (i in 2..n) if (isPrime[i]) count++
+    return count
 }
 
 fun mandelbrot(n: Int): Int {

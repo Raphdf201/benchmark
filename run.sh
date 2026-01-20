@@ -1,4 +1,4 @@
-echo run the c and cpp versions yourself
+echo "run the c and cpp versions yourself"
 
 echo c#
 ./csharp/bin/Release/net10.0/csharp

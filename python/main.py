@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import time
 
 
@@ -42,6 +44,34 @@ def prime_sieve(n: int) -> int:
     for i in range(2, n + 1):
         if is_prime[i]:
             count += 1
+    return count
+
+
+def mandelbrot(n: int) -> int:
+    count: int = 0
+    xmin: int = -2
+    xmax: int = 1
+    ymin: float = -1.5
+    ymax: float = 1.5
+    max_iter: int = 1000
+
+    for py in range(0, n):
+        for px in range(0, n):
+            x0: float = xmin + (xmax - xmin) * px / n
+            y0: float = ymin + (ymax - ymin) * py / n
+
+            x: float = 0
+            y: float = 0
+            i: int = 0
+
+            while x * x + y * y <= 4 and i < max_iter:
+                xtemp: float = x * x - y * y + x0
+                y = 2 * x * y + y0
+                x = xtemp
+                i += 1
+
+            count += i
+
     return count
 
 

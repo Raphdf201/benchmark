@@ -1,4 +1,4 @@
-Write-Output compile the c and cpp versions yourself
+Write-Output "compile the c and cpp versions yourself"
 Set-Location .\csharp
 dotnet build -c Release
 Set-Location ..\java

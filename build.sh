@@ -1,4 +1,4 @@
-echo compile the c and cpp versions yourself
+echo "compile the c and cpp versions yourself"
 cd ./csharp
 dotnet build -c Release
 cd ../java

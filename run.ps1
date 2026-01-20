@@ -1,4 +1,4 @@
-Write-Output run the c and cpp versions yourself
+Write-Output "run the c and cpp versions yourself"
 
 Write-Output c#
 .\csharp\bin\Release\net10.0\csharp.exe
