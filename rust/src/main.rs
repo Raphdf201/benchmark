@@ -6,14 +6,18 @@ fn main() {
     time_benchmark("1. Fibonacci(42)", || Box::new(fibonacci(42)));
     time_benchmark("2. Prime Sieve (10M)", || Box::new(prime_sieve(10_000_000)));
     time_benchmark("3. Mandelbrot (2000x2000)", || Box::new(mandelbrot(2000)));
-    time_benchmark("4. Matrix Multiply (500x500)", || Box::new(matrix_multiply(500)));
+    time_benchmark("4. Matrix Multiply (500x500)", || {
+        Box::new(matrix_multiply(500))
+    });
     time_benchmark("5. Binary Trees (depth 18)", || Box::new(binary_trees(18)));
 
     println!("\nDone!");
 }
 
 fn time_benchmark<F>(name: &str, action: F)
-where F: FnOnce() -> Box<dyn std::fmt::Display> {
+where
+    F: FnOnce() -> Box<dyn std::fmt::Display>,
+{
     let start = Instant::now();
     let result = action();
     let elapsed = start.elapsed();
@@ -32,8 +36,12 @@ fn prime_sieve(n: usize) -> usize {
     let mut is_prime = vec![true; n + 1];
 
     for i in 2..=n {
-        if i * i > n { break; }
-        if !is_prime[i] { continue; }
+        if i * i > n {
+            break;
+        }
+        if !is_prime[i] {
+            continue;
+        }
 
         for j in (i * i..=n).step_by(i) {
             is_prime[j] = false;
@@ -48,13 +56,13 @@ fn mandelbrot(n: i32) -> i32 {
     const XMIN: f64 = -2.0;
     const XMAX: f64 = 1.0;
     const YMIN: f64 = -1.5;
-    const YMAX: f64 = -1.5;
+    const YMAX: f64 = 1.5;
     const MAXITER: i32 = 1000;
 
     for py in 0..n {
         for px in 0..n {
-            let x0 = XMIN + (XMAX - XMIN) * py as f64 / n as f64;
-            let y0 = YMIN + (YMAX - YMIN) * px as f64 / n as f64;
+            let x0 = XMIN + (XMAX - XMIN) * px as f64 / n as f64;
+            let y0 = YMIN + (YMAX - YMIN) * py as f64 / n as f64;
 
             let mut x = 0.0;
             let mut y = 0.0;
@@ -105,7 +113,10 @@ fn binary_trees(n: i32) -> i32 {
 
 fn create_tree(n: i32) -> TreeNode {
     if n == 0 {
-        TreeNode { left: None, right: None }
+        TreeNode {
+            left: None,
+            right: None,
+        }
     } else {
         TreeNode {
             left: Some(Box::new(create_tree(n - 1))),

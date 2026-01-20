@@ -24,36 +24,19 @@ fun timeBenchmark(name: String, action: () -> Any) {
 }
 
 fun fibonacci(n: Long): Long {
-    if (n <- 1) return n
+    if (n <= 1) return n
     return fibonacci(n - 1) + fibonacci(n - 2)
-}
-
-fun primeSieve(n: Int): Int {
-    val isPrime = BooleanArray(n + 1)
-    for (i in 2..n) isPrime[i] = true
-
-    for (i in 2..n) {
-        if (i * i > n) break
-        if (!isPrime[i]) continue
-        for (j in (i * i)..n step i) {
-            isPrime[j] = false
-        }
-    }
-
-    var count = 0
-    for (i in 2..n) if (isPrime[i]) count++
-    return count
 }
 
 fun mandelbrot(n: Int): Int {
     var count = 0
     val xmin = -2.0
     val xmax = 1.0
-    val ymin= -1.5
+    val ymin = -1.5
     val ymax = 1.5
     val maxIter = 1000
 
-    for (py in 0..n) for (px in 0..n) {
+    for (py in 0 until n) for (px in 0 until n) {
         val x0 = xmin + (xmax - xmin) * px / n
         val y0 = ymin + (ymax - ymin) * py / n
 
@@ -75,18 +58,18 @@ fun mandelbrot(n: Int): Int {
 }
 
 fun matrixMultiply(n: Int): Double {
-    val a = Array(n + 1) { DoubleArray(n + 1) }
-    val b = Array(n + 1) { DoubleArray(n + 1) }
-    val c = Array(n + 1) { DoubleArray(n + 1) }
+    val a = Array(n) { DoubleArray(n) }
+    val b = Array(n) { DoubleArray(n) }
+    val c = Array(n) { DoubleArray(n) }
 
-    for (i in 0..n) for (j in 0..n) {
+    for (i in 0 until n) for (j in 0 until n) {
         a[i][j] = (i + j).toDouble()
         b[i][j] = (i - j).toDouble()
     }
 
-    for (i in 0..n) for (j in 0..n) {
+    for (i in 0 until n) for (j in 0 until n) {
         var sum = 0.0
-        for (k in 0..n) sum += a[i][k] * b[k][j]
+        for (k in 0 until n) sum += a[i][k] * b[k][j]
         c[i][j] = sum
     }
 
