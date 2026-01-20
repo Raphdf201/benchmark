@@ -5,6 +5,7 @@ i was bored so i coded some benchmarks in some languages that i know
 results :
 
 |Language|Fib|Prime sieve|mandelbrot|matrix multiply|binary trees|Variation|
+|-|-|-|-|-|-|-|
 |c|784|30|2937|165|62|no|
 |cpp|869|61|2945|175|68|no|
 |csharp|1791|38|2961|345|51|no|
